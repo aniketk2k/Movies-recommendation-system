@@ -1,0 +1,27 @@
+import streamlit as st
+import pandas as pd 
+import time
+
+movies=pd.read_csv('tmdb_5000_movies.csv')
+
+st.title("Movie Recommendion System")
+st.image("image//logo2.jpg")
+
+nav=st.sidebar.radio("Navigation",["Search","Our Data"])
+if nav=="Search":
+    moviename=st.text_input("Movie Name")
+    st.slider("Select the number of range of suggestions you want",min_value=5,max_value=50,value=10, step=5)
+    
+
+
+
+if nav=="Our Data":
+    st.write("Click the checkbox if you want to see the data:")
+    if st.checkbox("Show Data Table"):
+        st.write("The table contains data from more than 4800 movies so it may take some time.")
+        st.write("Loading the Data. Please Wait...")
+        progress=st.progress(0)
+        for i in range(100):
+            time.sleep(0.1)
+            progress.progress(i+1)
+        st.table(movies)
